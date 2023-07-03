@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/buttonNuevoJugador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="agregar_jugador_activity"
+        android:text="Nuevo Jugador " />
+
+    <Button
+        android:id="@+id/buttonlista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lista de Jugadores" />
+
+</LinearLayout>
