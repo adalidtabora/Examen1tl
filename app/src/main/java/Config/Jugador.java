@@ -1,32 +1,43 @@
 package Config;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
+
+
 import android.database.sqlite.SQLiteDatabase;
+
 public class Jugador {
-    private int id;
-    private String nombres;
-    private String apellidos;
-    private String pais;
-    private int edad;
-    private String posicion;
 
-    // Constructores, getters y setters
 
-    public Jugador(int id, String nombres, String apellidos, String pais, int edad, String posicion) {
-        this.id = id;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.pais = pais;
-        this.edad = edad;
-        this.posicion = posicion;
-    }
 
-    public int getId() {
+        private int id;
+        private String nombres;
+        private String apellidos;
+        private String pais;
+        private int edad;
+        private String posicion;
+
+        public Jugador() {
+        }
+
+        public Jugador(int id, String nombres, String apellidos, String pais, int edad, String posicion) {
+            this.id = id;
+            this.nombres = nombres;
+            this.apellidos = apellidos;
+            this.pais = pais;
+            this.edad = edad;
+            this.posicion = posicion;
+        }
+
+        // Getters y setters
+
+
+
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,88 +65,52 @@ public class Jugador {
         this.pais = pais;
     }
 
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public String getPosicion() {
         return posicion;
     }
 
-    public void setPosicion(String posicion) {
-        this.posicion = posicion;
+    public void setPosicion(String direccion) {
+        this.posicion = direccion;
     }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
 
     public long guardarJugador(Context context) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put("id", id);
-        values.put("nombres", nombres);
-        values.put("apellidos", apellidos);
-        values.put("pais", pais);
-        values.put("edad", edad);
-        values.put("posicion", posicion);
 
-        long newRowId = db.insert("jugadores", null, values);
 
-        db.close();
+            SQLiteConnection dbHelper = new SQLiteConnection(context);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        return newRowId;
-    }
+            ContentValues values = new ContentValues();
+            values.put("id", id);
+            values.put("nombres", nombres);
+            values.put("apellidos", apellidos);
+            values.put("pais", pais);
+            values.put("edad", edad);
+            values.put("posicion", posicion);
 
-    public static Jugador obtenerJugadorPorId(Context context, int jugadorId) {
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+            long resultado = db.insert("jugadores", null, values);
 
-        String[] projection = {
-                "id",
-                "nombres",
-                "apellidos",
-                "pais",
-                "edad",
-                "posicion"
-        };
+            db.close();
 
-        String selection = "id = ?";
-        String[] selectionArgs = {String.valueOf(jugadorId)};
-
-        Cursor cursor = db.query(
-                "jugadores",
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                null
-        );
-
-        Jugador jugador = null;
-
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String nombres = cursor.getString(cursor.getColumnIndexOrThrow("nombres"));
-            String apellidos = cursor.getString(cursor.getColumnIndexOrThrow("apellidos"));
-            String pais = cursor.getString(cursor.getColumnIndexOrThrow("pais"));
-            int edad = cursor.getInt(cursor.getColumnIndexOrThrow("edad"));
-            String posicion = cursor.getString(cursor.getColumnIndexOrThrow("posicion"));
-
-            jugador = new Jugador(id, nombres, apellidos, pais, edad, posicion);
+            return resultado;
         }
 
-        cursor.close();
-        db.close();
-
-        return jugador;
     }
 
-    // Otros métodos de la clase
 
-    // ...
 
-}
+
+
+
+
+
+
